@@ -119,7 +119,7 @@ export default {
                 photo: "https://fakeimg.pl/100",
                 item_type: 'upgrade_plan',
                 metadata: {
-                    title: 'Final Presentation',
+                    title: 'Plan',
                 },
                 group: 'Hobby List',
                 date: moment(dateNow).subtract(12, 'hours'),

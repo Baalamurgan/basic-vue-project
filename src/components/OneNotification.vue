@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { toRefs } from 'vue';
 import { defineProps } from "vue";
 import type { Notification } from './Notifications.vue';
 import moment from "moment"
 import Button from "./ui/Button.vue"
 import FigmaVue from "./icons/Figma.vue";
+//import mailicon from heroicons version 2
+//import MaiIcon from heroicons vue2 version
+import { EnvelopeIcon } from '@heroicons/vue/24/solid';
+import { EnvelopeOpenIcon } from '@heroicons/vue/24/solid';
+import { CheckCircleIcon } from '@heroicons/vue/24/solid';
+import { MinusCircleIcon } from '@heroicons/vue/24/solid';
 
 const props = defineProps({
     anotification: Object as () => Notification,
@@ -29,7 +36,6 @@ const removedAndAddedWords = (oldMessage: string, newMessage: string) => {
 
 const wordsInOldMessage = notification.metadata?.oldMessage?.split(' ')
 const wordsInNewMessage = notification.metadata?.newMessage?.split(' ')
-console.log({ notification })
 const difference = removedAndAddedWords(notification.metadata?.oldMessage, notification.metadata?.newMessage)
 
 
@@ -44,13 +50,23 @@ const randomColor = generateRandomHSLColor()
 const startingLettersOfName = notification.name?.split(' ').map(word => word[0]).join('')
 const newWordsLength = wordsInOldMessage?.length > wordsInNewMessage?.length ? wordsInOldMessage?.length : wordsInNewMessage?.length
 const statusTooltip = notification.status.charAt(0).toUpperCase() + notification.status.slice(1);
-console.log(difference)
+const messageRead = ref(notification.read)
+const showToolTip = ref(false)
+const acceptUpgradePlan = ref<boolean | undefined>(undefined)
+
+const upgradePlan = (upgradeValue: boolean) => {
+    acceptUpgradePlan.value = upgradeValue
+    setTimeout(() => {
+        acceptUpgradePlan.value = undefined;
+    }, 2000);
+}
+
 </script>
 
 <template>
-    <div class="min-h-[50px] px-5 py-2" :class="notification.read === false && 'bg-read'">
+    <div class="min-h-[50px] px-5 py-2" :class="messageRead === false && 'bg-read'">
         <div class="flex gap-x-3">
-            <div class="">
+            <div>
                 <div class="relative px-1">
                     <img v-if="notification.photo" v-bind:src="notification.photo" alt="" class="rounded-lg h-10 w-10">
                     <div v-else class="rounded-lg h-10 w-10 flex items-center justify-center"
@@ -64,7 +80,7 @@ console.log(difference)
                         :class="notification.status === 'online' ? 'bg-online border-white' : notification.status === 'busy' ? 'bg-busy border-white' : ''" />
                 </div>
             </div>
-            <div class="flex flex-col justify-center">
+            <div class="flex flex-1 flex-col justify-center">
                 <p class="inline-flex gap-x-1 whitespace-nowrap">
                     <span class="font-bold">{{notification.name}}</span>
                     <span>{{connector[notification.item_type]}}</span>
@@ -78,11 +94,26 @@ console.log(difference)
                         <span class="text-grey">{{notification.group}}</span>
                     </template>
                 </p>
-                <span v-if="notification.item_type === 'upgrade_plan'" class="my-2 flex gap-x-2">
+                <span v-if="notification.item_type === 'upgrade_plan'" class="my-2 flex items-center gap-x-2">
                     <Button
-                        class="bg-black rounded-lg text-white hover:bg-green-600 hover:text-black shadow-md">Accept</Button>
-                    <Button
-                        class="bg-white rounded-lg text-black border-[#dedcdc] border shadow-md hover:bg-red-400">Decline</Button>
+                        class="bg-black rounded-lg text-white hover:bg-green-600 shadow-md disabled:cursor-not-allowed"
+                        @click="upgradePlan(true)"
+                        :disabled="acceptUpgradePlan === true || acceptUpgradePlan === false">Accept</Button>
+                    <Button class=" bg-white rounded-lg text-black border-[#dedcdc] border shadow-md hover:bg-red-400
+                        hover:text-white disabled:cursor-not-allowed" @click="upgradePlan(false)"
+                        :disabled="acceptUpgradePlan === true || acceptUpgradePlan === false">Decline</Button>
+                    <Transition>
+                        <div v-if="acceptUpgradePlan === true" class="flex items-center">
+                            <CheckCircleIcon class="text-online h-7 w-7" />
+                            <p>Accepted</p>
+                        </div>
+                    </Transition>
+                    <Transition>
+                        <div v-if="acceptUpgradePlan === false" class="flex items-center">
+                            <MinusCircleIcon class="text-busy h-7 w-7" />
+                            <p>Declined</p>
+                        </div>
+                    </Transition>
                 </span>
                 <span v-if="notification.item_type === 'file'" class="my-2 flex gap-x-2">
                     <p class="inline-flex gap-x-1 whitespace-nowrap items-center">
@@ -107,19 +138,22 @@ console.log(difference)
                             <span v-else>{{wordsInNewMessage[i]}}</span>
                         </span>
                     </p>
-
-                    <!-- 
-                    <p class="inline-flex flex-wrap whitespace-nowrap items-center text-sm">
-                        <span class="font-semibold" v-for="oldWord in wordsInOldMessage">{{oldWord}}.</span>
-                    </p>
-                    <p class="inline-flex flex-wrap whitespace-nowrap items-center text-sm">
-                        <span class="font-semibold" v-for="newWord in wordsInNewMessage">{{newWord}}.</span>
-                    </p> -->
-                    <!-- <span class="font-semibold">{{difference.removedWords?.join(' ')}}</span> -->
-                    <!-- <span class="font-semibold">{{difference.addedWords?.join(' ')}}</span> -->
-                    <!-- <span class="">{{notification.metadata.oldMessage}}.{{notification.metadata.type}}</span> -->
-                    <!-- <span class="text-grey">{{notification.metadata.newMessage}}</span> -->
                 </span>
+            </div>
+            <div>
+                <EnvelopeOpenIcon v-if="messageRead" class="h-5 w-5 hover:cursor-pointer"
+                    :title="messageRead ? 'Mark as unread' : 'Mark as read'" @click="messageRead = !messageRead"
+                    @mouseenter="showToolTip = true" @mouseleave="showToolTip = false" />
+                <EnvelopeIcon v-else class="h-5 w-5 hover:cursor-pointer"
+                    :title="messageRead ? 'Mark as unread' : 'Mark as read'" @click="messageRead = !messageRead"
+                    @mouseenter="showToolTip = true" @mouseleave="showToolTip = false" />
+                <Transition>
+                    <div v-if="showToolTip"
+                        class="bg-black rounded-lg absolute -ml-20 text-white px-2 text-sm whitespace-nowrap">
+                        {{messageRead ? 'Mark as unread' :
+                        'Mark as read'}}
+                    </div>
+                </Transition>
             </div>
         </div>
     </div>
