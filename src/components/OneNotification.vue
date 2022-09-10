@@ -4,6 +4,7 @@ import { defineProps } from "vue";
 import type { Notification } from './Notifications.vue';
 import moment from "moment"
 import Button from "./ui/Button.vue"
+import FigmaVue from "./icons/Figma.vue";
 
 const props = defineProps({
     anotification: Object as () => Notification,
@@ -24,10 +25,6 @@ const removedAndAddedWords = (oldMessage: string, newMessage: string) => {
     const removedWords = oldWords?.filter(word => !newWords.includes(word))
     const addedWords = newWords?.filter(word => !oldWords.includes(word))
     return { removedWords, addedWords }
-}
-
-const fileImage = {
-    figma: '/src/assets/svgs/figma.svg',
 }
 
 const wordsInOldMessage = notification.metadata?.oldMessage?.split(' ')
@@ -89,8 +86,8 @@ console.log(difference)
                 </span>
                 <span v-if="notification.item_type === 'file'" class="my-2 flex gap-x-2">
                     <p class="inline-flex gap-x-1 whitespace-nowrap items-center">
-                        <img v-bind:src="(fileImage[(notification.metadata.type as 'figma')])" alt=""
-                            class="bg-white rounded-lg shadow-md p-2 h-10 w-10 border-grey border mr-2">
+                        <FigmaVue class="bg-white rounded-lg shadow-md p-2 h-10 w-10 border-grey border mr-2"
+                            v-if="notification.metadata.type === 'figma'" />
                         <span
                             class="font-semibold">{{notification.metadata.filename}}.{{notification.metadata.type}}</span>
                         <span class="text-grey">{{notification.metadata.size}}</span>
