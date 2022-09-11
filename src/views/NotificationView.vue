@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-    <div class="rounded-xl bg-white text-black min-w-[400px]">
+    <div class="rounded-xl bg-white text-black">
         <div class="flex items-center justify-between py-5 px-8">
             <h1 class="font-bold text-2xl">Notifications</h1>
             <p class="underline font-semibold hover:cursor-pointer" @click="markAllAsRead()">Mark all as read</p>

@@ -145,7 +145,7 @@ computed(() => {
 </script>
 
 <template>
-    <div class="w-fit">
+    <div>
         <div v-for="(sampleNotification,index) in sampleNotifications" :key="index">
             <OneNotification v-if="Object.keys(sampleNotification).length !== 0" :notification="sampleNotification">
             </OneNotification>
