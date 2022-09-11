@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { defineProps } from "vue";
-import type { Notification } from './Notifications.vue';
+import type { NotificationInterface } from '@/components/interfaces'
 import moment from "moment"
 import Button from '../ui/Button.vue';
 import FigmaVue from '../icons/Figma.vue';
@@ -13,7 +13,7 @@ import { MinusCircleIcon } from '@heroicons/vue/24/solid';
 
 const props = defineProps({
     notification: {
-        type: Object as () => Notification,
+        type: Object as () => NotificationInterface,
         required: true
     },
     allMessagesRead: {
