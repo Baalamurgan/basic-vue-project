@@ -6,6 +6,7 @@ import type { Notification } from './Notifications.vue';
 import moment from "moment"
 import Button from "./ui/Button.vue"
 import FigmaVue from "./icons/Figma.vue";
+import PdfVue from './icons/Pdf.vue';
 //import mailicon from heroicons version 2
 //import MaiIcon from heroicons vue2 version
 import { EnvelopeIcon } from '@heroicons/vue/24/solid';
@@ -118,7 +119,9 @@ const upgradePlan = (upgradeValue: boolean) => {
                 <span v-if="notification.item_type === 'file'" class="my-2 flex gap-x-2">
                     <p class="inline-flex gap-x-1 whitespace-nowrap items-center">
                         <FigmaVue class="bg-white rounded-lg shadow-md p-2 h-10 w-10 border-grey border mr-2"
-                            v-if="notification.metadata.type === 'figma'" />
+                            v-if="notification.metadata.type === 'fig'" />
+                        <PdfVue class="bg-white rounded-lg shadow-md p-2 h-10 w-10 border-grey border mr-2"
+                            v-if="notification.metadata.type === 'pdf'" />
                         <span
                             class="font-semibold">{{notification.metadata.filename}}.{{notification.metadata.type}}</span>
                         <span class="text-grey">{{notification.metadata.size}}</span>

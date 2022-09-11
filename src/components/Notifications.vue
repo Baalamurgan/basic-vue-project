@@ -91,7 +91,7 @@ export default {
                 metadata: {
                     size: '2mb',
                     filename: 'landing_page_ver2',
-                    type: 'figma'
+                    type: 'fig'
                 },
                 title: 'Final Presentation',
                 date: moment(dateNow).subtract(1, 'days'),
