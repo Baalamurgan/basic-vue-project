@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Cog6ToothIcon } from '@heroicons/vue/24/solid';
+import { ref } from 'vue';
 import type { Tab } from './interfaces';
 import Notifications from './notifications/Notifications.vue';
 defineProps({
@@ -9,17 +10,24 @@ defineProps({
     activeTab: {
         type: String
     },
-    allMessagesRead: {
-        type: Boolean
-    },
 });
 
 defineEmits(['changeActiveTabEmitter']);
+
+const allMessagesRead = ref(false);
+const markAllAsRead = () => {
+    allMessagesRead.value = allMessagesRead.value ? false : true;
+}
 </script>
 
 <template>
     <template v-if="tabs">
-        <div class="px-5">
+        <div class="px-6 sticky top-0 z-50 bg-blend-saturation backdrop-blur-xl">
+            <div class="flex items-center justify-between pt-5 pb-2">
+                <h1 class="font-bold text-2xl">Notifications</h1>
+                <p class="underline font-semibold hover:cursor-pointer" @click="markAllAsRead()">{{allMessagesRead ?
+                "Mark all as unread" : 'Mark all as read'}}</p>
+            </div>
             <div class="relative inline-flex flex-col items-center pt-3 w-full">
                 <div class="flex items-center justify-between w-full">
                     <div v-if="tabs" class="flex items-center">

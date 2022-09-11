@@ -176,6 +176,54 @@ const sampleFollowingNotifications = ref<any>(
         read: true,
         status: 'busy'
     },
+    {
+        name: 'Dan Merix',
+        photo: "https://fakeimg.pl/100",
+        item_type: 'upgrade_plan',
+        metadata: {
+            title: 'Plan',
+        },
+        group: 'Hobby List',
+        date: moment(dateNow).subtract(12, 'hours'),
+        read: true,
+        status: 'busy'
+    },
+    {
+        name: 'Dan Merix',
+        photo: "https://fakeimg.pl/100",
+        item_type: 'upgrade_plan',
+        metadata: {
+            title: 'Plan',
+        },
+        group: 'Hobby List',
+        date: moment(dateNow).subtract(12, 'hours'),
+        read: true,
+        status: 'busy'
+    },
+    {
+        name: 'Dan Merix',
+        photo: "https://fakeimg.pl/100",
+        item_type: 'upgrade_plan',
+        metadata: {
+            title: 'Plan',
+        },
+        group: 'Hobby List',
+        date: moment(dateNow).subtract(12, 'hours'),
+        read: true,
+        status: 'busy'
+    },
+    {
+        name: 'Dan Merix',
+        photo: "https://fakeimg.pl/100",
+        item_type: 'upgrade_plan',
+        metadata: {
+            title: 'Plan',
+        },
+        group: 'Hobby List',
+        date: moment(dateNow).subtract(12, 'hours'),
+        read: true,
+        status: 'busy'
+    },
     ]
 )
 
@@ -197,21 +245,12 @@ const sampleTabsData = ref([{
     title: 'Archive',
     component: ArchiveVue
 }])
-const allMessagesRead = ref(false);
-const markAllAsRead = () => {
-    allMessagesRead.value = allMessagesRead.value ? false : true;
-}
 </script>
 
 <template>
-    <div class="rounded-xl bg-white text-black min-w-[400px]">
-        <div class="flex items-center justify-between py-5 px-8">
-            <h1 class="font-bold text-2xl">Notifications</h1>
-            <p class="underline font-semibold hover:cursor-pointer" @click="markAllAsRead()">{{allMessagesRead ?
-            "Mark all as unread" : 'Mark all as read'}}</p>
-        </div>
+    <div class="rounded-xl bg-white text-black min-w-[400px] max-h-screen overflow-y-auto">
         <TabsVue :tabs="sampleTabsData" :activeTab="activeTab"
-            @change-active-tab-emitter="(newTab) => changeActiveTab(newTab)" :allMessagesRead="allMessagesRead">
+            @change-active-tab-emitter="(newTab) => changeActiveTab(newTab)">
         </TabsVue>
     </div>
 </template>

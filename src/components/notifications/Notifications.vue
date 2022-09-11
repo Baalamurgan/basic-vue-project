@@ -23,7 +23,7 @@ computed(() => {
 </script>
 
 <template>
-    <div class="max-h-[670px] min-h-[400px] overflow-y-auto">
+    <div class="min-h-[400px] overflow-y-auto z-40">
         <div v-if="sampleNotifications">
             <div v-for="(sampleNotification,index) in sampleNotifications" :key="index">
                 <OneNotification v-if="Object.keys(sampleNotification).length !== 0" :notification="sampleNotification"
@@ -47,8 +47,8 @@ computed(() => {
                 <hr>
             </div>
         </div>
-        <div v-else class="mt-5  text-center">
-            <h1 class="font-bold">No Data Found</h1>
+        <div v-else class="mt-5 text-center">
+            <h1 class="font-bold text-xl">No Data Found</h1>
         </div>
     </div>
 </template>

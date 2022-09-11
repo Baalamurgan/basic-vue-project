@@ -74,7 +74,7 @@ watch(() => props.allMessagesRead, (newVal, oldVal) => {
 </script>
 
 <template>
-    <div class="min-h-[50px] px-4 pt-2" :class="messageRead === false && 'bg-read'">
+    <div class="min-h-[50px] px-5 pt-2" :class="messageRead === false && 'bg-read'">
         <div class="border-b-grey border-b pb-2 border-opacity-10">
             <div class="flex justify-between gap-x-2">
                 <div class="flex w-full gap-x-1">
