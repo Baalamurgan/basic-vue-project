@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, toRef, type Ref } from 'vue'
-import { toRefs } from 'vue';
+import { ref, watch } from 'vue'
 import { defineProps } from "vue";
 import type { Notification } from './Notifications.vue';
 import moment from "moment"
@@ -17,6 +16,10 @@ const props = defineProps({
         type: Object as () => Notification,
         required: true
     },
+    allMessagesRead: {
+        type: Boolean,
+        required: true
+    }
 });
 
 const notification = props.notification;
@@ -58,6 +61,15 @@ const acceptUpgradePlan = ref<boolean | undefined>(undefined)
 const upgradePlan = (upgradeValue: boolean) => {
     acceptUpgradePlan.value = upgradeValue
 }
+
+watch(() => props.allMessagesRead, (newVal, oldVal) => {
+    if (newVal === true) {
+        messageRead.value = true
+    }
+    else {
+        messageRead.value = false
+    }
+});
 
 </script>
 
@@ -108,13 +120,13 @@ const upgradePlan = (upgradeValue: boolean) => {
                             <Transition>
                                 <div v-if="acceptUpgradePlan === true" class="flex items-center">
                                     <CheckCircleIcon class="text-online h-7 w-7" />
-                                    <p>Accepted</p>
+                                    <p class="font-semibold">Accepted</p>
                                 </div>
                             </Transition>
                             <Transition>
                                 <div v-if="acceptUpgradePlan === false" class="flex items-center">
                                     <MinusCircleIcon class="text-busy h-7 w-7" />
-                                    <p>Declined</p>
+                                    <p class="font-semibold">Declined</p>
                                 </div>
                             </Transition>
                         </span>

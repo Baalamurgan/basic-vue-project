@@ -130,13 +130,13 @@ const sampleNotifications = ref<any>(
 )
 
 const props = defineProps({
-    markAllAsRead: {
+    allMessagesRead: {
         type: Boolean,
     },
 })
 
 computed(() => {
-    if (props.markAllAsRead) {
+    if (props.allMessagesRead) {
         sampleNotifications.value.forEach((notification: Notification) => {
             notification.read = true
         })
@@ -147,9 +147,10 @@ computed(() => {
 <template>
     <div>
         <div v-for="(sampleNotification,index) in sampleNotifications" :key="index">
-            <OneNotification v-if="Object.keys(sampleNotification).length !== 0" :notification="sampleNotification">
+            <OneNotification v-if="Object.keys(sampleNotification).length !== 0" :notification="sampleNotification"
+                :all-messages-read="props.allMessagesRead">
             </OneNotification>
-            <div v-else class="min-h-[64px] px-4 py-3">
+            <div v-else class=" min-h-[64px] px-4 py-3">
                 <div class="flex gap-x-3">
                     <div class="relative px-1">
                         <div class="rounded-lg h-10 w-10 flex items-center justify-center bg-[#f2f3f3]" />
