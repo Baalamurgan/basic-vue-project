@@ -248,7 +248,7 @@ const sampleTabsData = ref([{
 </script>
 
 <template>
-    <div class="rounded-xl bg-white text-black min-w-[400px] max-h-screen overflow-y-auto">
+    <div class="rounded-xl bg-white text-black min-w-[400px] max-h-screen min-h-screen overflow-y-auto">
         <TabsVue :tabs="sampleTabsData" :activeTab="activeTab"
             @change-active-tab-emitter="(newTab) => changeActiveTab(newTab)">
         </TabsVue>
