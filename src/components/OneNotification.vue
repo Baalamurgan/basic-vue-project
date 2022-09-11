@@ -7,8 +7,6 @@ import moment from "moment"
 import Button from "./ui/Button.vue"
 import FigmaVue from "./icons/Figma.vue";
 import PdfVue from './icons/Pdf.vue';
-//import mailicon from heroicons version 2
-//import MaiIcon from heroicons vue2 version
 import { EnvelopeIcon } from '@heroicons/vue/24/solid';
 import { EnvelopeOpenIcon } from '@heroicons/vue/24/solid';
 import { CheckCircleIcon } from '@heroicons/vue/24/solid';
@@ -19,6 +17,7 @@ const props = defineProps({
 });
 
 const notification = JSON.parse(JSON.stringify(toRefs(props).anotification?.value)) as Notification
+console.log(notification)
 const connector = {
     join: 'joined to',
     edited: 'edited',
@@ -26,7 +25,6 @@ const connector = {
     upgrade_plan: 'is requesting to upgrade',
     file: 'upload a file',
 }
-
 const removedAndAddedWords = (oldMessage: string, newMessage: string) => {
     const oldWords = oldMessage?.split(' ')
     const newWords = newMessage?.split(' ')
