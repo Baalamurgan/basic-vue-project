@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { defineProps } from "vue";
-import type { NotificationInterface } from '@/components/interfaces'
+import type { ItemTypes, NotificationInterface } from '@/components/interfaces'
 import moment from "moment"
 import Button from '../ui/Button.vue';
 import FigmaVue from '../icons/Figma.vue';
@@ -22,8 +22,10 @@ const props = defineProps({
     }
 });
 
+
 const notification = props.notification;
-const connector = {
+notification.item_type
+const connector: Record<ItemTypes, string> = {
     join: 'joined to',
     edited: 'edited',
     mention: 'mention you in',
